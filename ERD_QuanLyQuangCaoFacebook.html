@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>ERD - Quản lý Quảng cáo Facebook</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<style>
+  body { font-family: Arial, sans-serif; background: #f9f9f9; padding: 30px; }
+  h2 { text-align: center; color: #333; }
+  p  { text-align: center; color: #666; font-size: 14px; }
+  #erd { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); max-width: 1100px; margin: 0 auto; }
+</style>
+</head>
+<body>
+<h2>ERD - Hệ thống Quản lý Chạy Quảng cáo Facebook</h2>
+<p>DBI202 RBL | Nhóm: huggayandphuc</p>
+<div id="erd">
+<pre class="mermaid">
+erDiagram
+  KhachHang {
+    int KhachHangID PK
+    string HoTen
+    string Email
+    string SoDienThoai
+    string DiaChi
+    date NgayDangKy
+  }
+  NhanVien {
+    int NhanVienID PK
+    string HoTen
+    string Email
+    string ChucVu
+    date NgayVaoLam
+  }
+  HopDong {
+    int HopDongID PK
+    int KhachHangID FK
+    int NhanVienID FK
+    date NgayBatDau
+    date NgayKetThuc
+    decimal GiaTriHopDong
+    string TrangThai
+  }
+  ChienDich {
+    int ChienDichID PK
+    int HopDongID FK
+    string TenChienDich
+    string MucTieu
+    date NgayBatDau
+    date NgayKetThuc
+    string TrangThai
+  }
+  NganSach {
+    int NganSachID PK
+    int ChienDichID FK
+    decimal TongNganSach
+    decimal DaChiTieu
+    string DonViTien
+    date NgayCapNhat
+  }
+  QuangCao {
+    int QuangCaoID PK
+    int ChienDichID FK
+    string TenQuangCao
+    string LoaiQuangCao
+    string NoiDung
+    string TrangThai
+  }
+  BaoCaoHieuQua {
+    int BaoCaoID PK
+    int QuangCaoID FK
+    date NgayBaoCao
+    int LuotXem
+    int LuotNhanChuot
+    int LuotChuyenDoi
+    decimal DoanhThu
+    decimal ChiPhi
+  }
+  KhachHang ||--o{ HopDong : "ky"
+  NhanVien ||--o{ HopDong : "phu_trach"
+  HopDong ||--o{ ChienDich : "bao_gom"
+  ChienDich ||--|| NganSach : "co"
+  ChienDich ||--o{ QuangCao : "chua"
+  QuangCao ||--o{ BaoCaoHieuQua : "tao_ra"
+</pre>
+</div>
+<script>
+  mermaid.initialize({ startOnLoad: true, theme: 'default', fontSize: 14 });
+</script>
+</body>
+</html>
